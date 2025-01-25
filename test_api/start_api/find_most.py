@@ -21,7 +21,9 @@ class FindMost(Resource):
             with connection.cursor() as cursor:
                 cursor.execute(
                     """
-                    SELECT name, object_id, course FROM lecture
+                    SELECT lecture.name, object.object_name, lecture.course
+                    FROM lecture 
+                    INNER JOIN object ON lecture.object_id = object.id_object
                     ORDER BY count_view DESC
                     """
                 )

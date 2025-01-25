@@ -15,15 +15,19 @@ except Exception as e:
     print(f"Ошибка подключения к базе данных: {e}")
     exit()
 
+
 class FindAll(Resource):
     def get(self):
         try:
             with connection.cursor() as cursor:
                 cursor.execute(
                     """
-                    SELECT name, object_id, course FROM lecture
+                    SELECT lecture.name, object.object_name, lecture.course   
+                    FROM lecture 
+                    INNER JOIN object ON lecture.object_id = object.id_object
                     """
                 )
+
                 rows = cursor.fetchall()
                 columns = [desc[0] for desc in cursor.description]
                 result = [dict(zip(columns, row)) for row in rows]
@@ -32,41 +36,6 @@ class FindAll(Resource):
             return json.loads(json_result), 200
         except Exception as e:
             return {"message": f"Error retrieving data: {e}"}, 500
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 # from flask_restful import Resource, reqparse
 # from config import host, user, password_db, db_name

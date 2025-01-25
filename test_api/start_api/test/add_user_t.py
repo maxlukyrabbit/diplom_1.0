@@ -1,6 +1,6 @@
 import requests
 
-url = "http://127.0.0.1:3000/api/user_add"
+url = "http://77.222.47.209:3000/api/user_add"
 data = {
     "surname": "Закиров",
     "name": "Ильнур",

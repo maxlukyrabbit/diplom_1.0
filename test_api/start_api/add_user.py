@@ -1,7 +1,8 @@
 from flask_restful import Resource, reqparse
+from psycopg2.extras import RealDictCursor
+
 from config import host, user, password_db, db_name
 import psycopg2
-
 
 try:
     connection = psycopg2.connect(
@@ -16,8 +17,39 @@ except Exception as e:
     exit()
 
 class AddUser(Resource):
+    def get(self):
+        parser = reqparse.RequestParser()
+        parser.add_argument("surname", type=str, required=True, help="surname is required")
+        parser.add_argument("name", type=str, required=True, help="name is required")
+        parser.add_argument("password", type=str, required=True, help="password is required")
+        args = parser.parse_args()
+
+        try:
+            with connection.cursor(cursor_factory=RealDictCursor) as cursor:
+                cursor.execute(
+                    """
+                    SELECT password
+                    FROM "user" 
+                    WHERE surname = %s AND name = %s
+                    """,
+                    (args["surname"], args["name"])
+                )
+                user = cursor.fetchone()
+
+                if user:
+                    if user["password"] == args["password"]:
+                        return {"result": 0}, 200
+                    else:
+                        return {"result": 1}, 200
+                else:
+                    return {"result": 2}, 200
+
+        except Exception as e:
+            return {"message": f"Error retrieving data: {e}"}, 500
+
+
+
     def put(self):
-        # Используем reqparse для извлечения данных из запроса
         parser = reqparse.RequestParser()
         parser.add_argument("surname", type=str, required=True, help="Surname is required")
         parser.add_argument("name", type=str, required=True, help="Name is required")

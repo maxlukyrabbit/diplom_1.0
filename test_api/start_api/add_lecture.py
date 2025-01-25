@@ -1,5 +1,7 @@
 import base64
 from flask_restful import Resource, reqparse
+from psycopg2.extras import RealDictCursor
+
 from config import host, user, password_db, db_name
 import psycopg2
 
@@ -16,6 +18,39 @@ except Exception as e:
     exit()
 
 class AddLecture(Resource):
+    def get(self):
+        parser = reqparse.RequestParser()
+        parser.add_argument("id_lecture", type=int, location="args", required=True, help="id_lecture is required")
+        args = parser.parse_args()
+
+        try:
+            with connection.cursor(cursor_factory=RealDictCursor) as cursor:
+                cursor.execute(
+                    """
+                    SELECT name, file_pdf
+                    FROM "lecture" 
+                    WHERE id_lecture = %s
+                    """,
+                    (args["id_lecture"],)
+                )
+                lecture = cursor.fetchone()
+
+                if lecture:
+                    file_pdf_base64 = base64.b64encode(lecture["file_pdf"]).decode("utf-8")
+
+                    return {
+                        "result": 0,
+                        "data": {
+                            "name": lecture["name"],
+                            "file_pdf": file_pdf_base64
+                        }
+                    }, 200
+                else:
+                    return {"result": 2, "message": "Lecture not found"}, 404
+
+        except Exception as e:
+            return {"result": 1, "message": f"Error retrieving data: {e}"}, 500
+
     def put(self):
         parser = reqparse.RequestParser()
         parser.add_argument("name", type=str, required=True, help="Name is required")

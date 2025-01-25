@@ -14,4 +14,4 @@ api.add_resource(FindMost, "/api/find_most")
 api.add_resource(FindAll, "/api/find_all")
 
 if __name__ == "__main__":
-    app.run(debug=True, port=3000, host="127.0.0.1")
+    app.run(debug=True, port=3000, host="77.222.47.209")

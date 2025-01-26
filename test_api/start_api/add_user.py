@@ -1,6 +1,7 @@
-from flask_restful import Resource, reqparse
-from psycopg2.extras import RealDictCursor
+import json
 
+from flask import request
+from flask_restful import Resource, reqparse
 from config import host, user, password_db, db_name
 import psycopg2
 
@@ -16,37 +17,34 @@ except Exception as e:
     print(f"Ошибка подключения к базе данных: {e}")
     exit()
 
-class AddUser(Resource):
-    def get(self):
-        parser = reqparse.RequestParser()
-        parser.add_argument("surname", type=str, required=True, help="surname is required")
-        parser.add_argument("name", type=str, required=True, help="name is required")
-        parser.add_argument("password", type=str, required=True, help="password is required")
-        args = parser.parse_args()
 
+class AddUser(Resource):
+
+    def get(self):
         try:
-            with connection.cursor(cursor_factory=RealDictCursor) as cursor:
+            surname = request.args.get("surname")
+            name = request.args.get("name")
+
+            if not surname or not name:
+                return {"message": "Both 'surname' and 'name' query parameters are required."}, 400
+
+            with connection.cursor() as cursor:
                 cursor.execute(
                     """
                     SELECT password
                     FROM "user" 
                     WHERE surname = %s AND name = %s
                     """,
-                    (args["surname"], args["name"])
+                    (surname, name)
                 )
-                user = cursor.fetchone()
+                rows = cursor.fetchall()
+                columns = [desc[0] for desc in cursor.description]
+                result = [dict(zip(columns, row)) for row in rows]
+                json_result = json.dumps(result, ensure_ascii=False, indent=4)
 
-                if user:
-                    if user["password"] == args["password"]:
-                        return {"result": 0}, 200
-                    else:
-                        return {"result": 1}, 200
-                else:
-                    return {"result": 2}, 200
-
+            return json.loads(json_result), 200
         except Exception as e:
             return {"message": f"Error retrieving data: {e}"}, 500
-
 
 
     def put(self):

@@ -51,38 +51,21 @@ public class add_user extends AppCompatActivity {
         Handler handler = new Handler(Looper.getMainLooper());
 
         executor.execute(() -> {
-            String apiUrl = "http://77.222.47.209:3000/api/user_add";
+            String apiUrl = "http://77.222.47.209:3000/api/user_add?surname=" + surname.getText().toString() + "&name=" + name.getText().toString();
             String resultMessage = "";
-            int resultCode = -1;
+            String password_get = null;
 
             HttpURLConnection connection = null;
-            BufferedWriter writer = null;
             BufferedReader reader = null;
 
             try {
-                // Подготовка JSON-данных
-                JSONObject jsonObject = new JSONObject();
-                jsonObject.put("surname", "Случаев66");
-                jsonObject.put("name", "Максим");
-                jsonObject.put("password", "12345678g");
-                String jsonInput = jsonObject.toString();
-
-                // Настройка соединения
                 URL url = new URL(apiUrl);
                 connection = (HttpURLConnection) url.openConnection();
                 connection.setRequestMethod("GET");
                 connection.setConnectTimeout(5000);
                 connection.setReadTimeout(5000);
-                connection.setDoOutput(true); // Указываем, что будем передавать данные
-                connection.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
                 connection.setRequestProperty("Accept", "application/json");
 
-                // Отправка JSON-данных
-                writer = new BufferedWriter(new OutputStreamWriter(connection.getOutputStream(), "UTF-8"));
-                writer.write(jsonInput);
-                writer.flush();
-
-                // Получение ответа от сервера
                 int responseCode = connection.getResponseCode();
                 if (responseCode == HttpURLConnection.HTTP_OK) {
                     reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
@@ -93,8 +76,13 @@ public class add_user extends AppCompatActivity {
                         response.append(line);
                     }
 
-                    JSONObject jsonResponse = new JSONObject(response.toString());
-                    resultCode = jsonResponse.optInt("result", -1);
+                    JSONArray jsonResponse = new JSONArray(response.toString());
+                    if (jsonResponse.length() > 0) {
+                        JSONObject firstObject = jsonResponse.getJSONObject(0);
+                        password_get = firstObject.optString("password", null);
+                    } else {
+                        resultMessage = "Пользователь не найден";
+                    }
                 } else {
                     resultMessage = "Ошибка сервера: " + responseCode;
                 }
@@ -103,7 +91,6 @@ public class add_user extends AppCompatActivity {
                 resultMessage = "Ошибка при выполнении запроса: " + e.getMessage();
             } finally {
                 try {
-                    if (writer != null) writer.close();
                     if (reader != null) reader.close();
                     if (connection != null) connection.disconnect();
                 } catch (IOException e) {
@@ -111,28 +98,34 @@ public class add_user extends AppCompatActivity {
                 }
             }
 
-            int finalResultCode = resultCode;
             String finalResultMessage = resultMessage;
+            String finalPassword = password_get;
 
             handler.post(() -> {
-                switch (finalResultCode) {
-                    case 0:
+                if (finalPassword != null) {
+                    if(password.getText().toString().equals(finalPassword)){
                         Intent intent = new Intent(this, MainActivity.class);
                         startActivity(intent);
-                        break;
-                    case 1:
-                        Toast.makeText(getApplicationContext(), "Неверный пароль", Toast.LENGTH_SHORT).show();
-                        break;
-                    case 2:
-                        Toast.makeText(getApplicationContext(), "Пользователя нет", Toast.LENGTH_SHORT).show();
-                        break;
-                    default:
-                        Toast.makeText(getApplicationContext(), finalResultMessage.isEmpty() ? "Неизвестный результат" : finalResultMessage, Toast.LENGTH_SHORT).show();
-                        break;
+                    }
+                    else{
+                        Toast.makeText(this, "Неверный пароль", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(getApplicationContext(), finalResultMessage.isEmpty() ? "Пользователь не найден" : finalResultMessage, Toast.LENGTH_LONG).show();
                 }
             });
         });
     }
+
+    public void user_add(View v){
+        UserInputDialog.showDialog(this);
+
+    }
+
+
+
+
+
 
 
 

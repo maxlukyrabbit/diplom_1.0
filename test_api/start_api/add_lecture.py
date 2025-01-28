@@ -81,3 +81,23 @@ class AddLecture(Resource):
             return {"message": "Lecture added successfully"}, 201
         except Exception as e:
             return {"message": f"Error adding lecture: {e}"}, 500
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

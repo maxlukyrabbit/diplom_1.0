@@ -23,6 +23,7 @@
         android:layout_width="189dp"
         android:layout_height="52dp"
         android:layout_marginTop="428dp"
+        android:onClick="user_add"
         android:text="Зарегистрироваться"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

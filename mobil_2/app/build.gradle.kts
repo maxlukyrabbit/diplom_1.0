@@ -39,6 +39,7 @@ dependencies {
     implementation(libs.constraintlayout)
     // https://mvnrepository.com/artifact/com.github.barteksc/android-pdf-viewer
     implementation ("com.github.mhiew:android-pdf-viewer:3.2.0-beta.3")
+    implementation("com.squareup.okhttp3:okhttp:4.12.0")
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)

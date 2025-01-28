@@ -28,7 +28,6 @@ public class UserInputDialog {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         LayoutInflater inflater = LayoutInflater.from(context);
 
-        // Подключение пользовательского интерфейса
         View dialogView = inflater.inflate(R.layout.dialog_user_input, null);
         builder.setView(dialogView);
 

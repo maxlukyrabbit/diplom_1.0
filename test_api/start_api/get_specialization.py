@@ -1,6 +1,6 @@
 import json
 
-from flask_restful import Resource, reqparse
+from flask_restful import Resource
 from config import host, user, password_db, db_name
 import psycopg2
 

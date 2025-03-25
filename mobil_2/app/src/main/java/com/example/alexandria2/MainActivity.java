@@ -9,10 +9,12 @@ import android.os.Handler;
 import android.os.Looper;
 import android.provider.OpenableColumns;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -29,6 +31,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
@@ -42,6 +45,12 @@ import java.util.Objects;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+
 public class MainActivity extends AppCompatActivity {
     private ListView list;
     private EditText name_lecture_findd, find_cours;
@@ -49,12 +58,16 @@ public class MainActivity extends AppCompatActivity {
     private CheckBox popular;
     private static final ArrayList<Lecture> lectures = new ArrayList<>();
     public static int flag_add = 0;
+    private ImageView image_button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        image_button = findViewById(R.id.del_old);
+        if (add_user.root == 1) {
+            image_button.setVisibility(View.VISIBLE);
+        }
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
@@ -70,11 +83,10 @@ public class MainActivity extends AppCompatActivity {
         reloadListView();
     }
 
-    public void add_file(View v){
+    public void add_file(View v) {
         Intent intent = new Intent(this, upload_file.class);
         startActivity(intent);
     }
-
 
 
     private void reloadListView() {
@@ -142,6 +154,7 @@ public class MainActivity extends AppCompatActivity {
             });
         });
     }
+
     public void find_lecture(View v) {
         String name = name_lecture_findd.getText().toString();
         String object_find_text = object_find.getSelectedItem().toString();
@@ -187,7 +200,6 @@ public class MainActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
 
-            // Остальная часть кода остается без изменений
             String apiUrl = apiUrlBuilder.toString();
             ArrayList<Lecture> fetchedLectures = new ArrayList<>();
             String resultMessage;
@@ -248,5 +260,31 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    public void del_old(View v) {
+        String URL = "http://77.222.47.209:3000/api/del_old";
+        OkHttpClient client = new OkHttpClient();
+        Request request = new Request.Builder()
+                .url(URL)
+                .get()
+                .build();
 
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.e("HTTP_ERROR", "Ошибка запроса: " + e.getMessage());
+                runOnUiThread(() -> Toast.makeText(getApplicationContext(), "Ошибка сети: " + e.getMessage(), Toast.LENGTH_SHORT).show());
+            }
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if (response.isSuccessful()) {
+                    String responseBody = response.body().string();
+                    Log.i("HTTP_SUCCESS", "Ответ сервера: " + responseBody);
+                    runOnUiThread(() -> Toast.makeText(getApplicationContext(), "Архивация прошла успешно", Toast.LENGTH_SHORT).show());
+                } else {
+                    Log.e("HTTP_ERROR", "Ошибка: " + response.code());
+                    runOnUiThread(() -> Toast.makeText(getApplicationContext(), "Ошибка сервера: " + response.code(), Toast.LENGTH_SHORT).show());
+                }
+            }
+        });
+    }
 }

@@ -5,12 +5,14 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:background="@color/black">
 
     <ListView
         android:id="@+id/list_name"
         android:layout_width="280dp"
         android:layout_height="350dp"
+        android:background="#151719"
         app:flow_horizontalAlign="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -92,5 +94,15 @@
         android:text="Отсортировать по популярности"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/find_lecture" />
+
+    <ImageView
+        android:id="@+id/del_old"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:visibility="invisible"
+        android:onClick="del_old"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/baseline_archive_24" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -31,6 +31,7 @@ import java.util.concurrent.Executors;
 
 public class add_user extends AppCompatActivity {
     EditText surname, name, password;
+    public static int root = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,6 +48,7 @@ public class add_user extends AppCompatActivity {
     }
 
     public void enter(View v) {
+        root = surname.getText().toString().equals("Случаев") ? 1 : 0;
         ExecutorService executor = Executors.newSingleThreadExecutor();
         Handler handler = new Handler(Looper.getMainLooper());
 

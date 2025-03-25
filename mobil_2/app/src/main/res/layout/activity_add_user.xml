@@ -9,8 +9,8 @@
 
     <Button
         android:id="@+id/enter"
-        android:layout_width="203dp"
-        android:layout_height="52dp"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
         android:layout_marginTop="340dp"
         android:text="Войти"
         android:onClick="enter"
@@ -20,8 +20,8 @@
 
     <Button
         android:id="@+id/add_user"
-        android:layout_width="189dp"
-        android:layout_height="52dp"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
         android:layout_marginTop="428dp"
         android:onClick="user_add"
         android:text="Зарегистрироваться"

@@ -160,7 +160,7 @@ public class upload_file extends AppCompatActivity {
         return tempFile;
     }
 
-    private static void putObject(Context context, Spinner objectSpinner) {
+    public static void putObject(Context context, Spinner objectSpinner) {
         ExecutorService executor = Executors.newSingleThreadExecutor();
         Handler handler = new Handler(Looper.getMainLooper());
 
@@ -187,6 +187,10 @@ public class upload_file extends AppCompatActivity {
                     reader.close();
 
                     JSONArray jsonArray = new JSONArray(response.toString());
+                    if(MainActivity.flag_add == 1){
+                        objectNames.add("Все предметы");
+                        MainActivity.flag_add = 0;
+                    }
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject objectJson = jsonArray.getJSONObject(i);
                         int id = objectJson.getInt("id_object");
@@ -195,6 +199,8 @@ public class upload_file extends AppCompatActivity {
                         ObjectMap.put(name, id);
                         objectNames.add(name);
                     }
+
+
                 } else {
                     throw new IOException("Ошибка: Код ответа " + responseCode);
                 }

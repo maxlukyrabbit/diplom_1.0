@@ -28,12 +28,22 @@ class AddLecture(Resource):
                 cursor.execute(
                     """
                     SELECT name, file_pdf
-                    FROM "lecture" 
-                    WHERE id_lecture = %s
+                    FROM "lecture"
+                    WHERE id_lecture = %s;
                     """,
                     (args["id_lecture"],)
                 )
                 lecture = cursor.fetchone()
+
+                cursor.execute(
+                    """
+                    UPDATE "lecture"
+                    SET count_view = count_view + 1
+                    WHERE id_lecture = %s;
+                    """,
+                    (args["id_lecture"],)
+                )
+                connection.commit()
 
                 if lecture:
                     file_pdf_base64 = base64.b64encode(lecture["file_pdf"]).decode("utf-8")

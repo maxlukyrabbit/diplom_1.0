@@ -19,16 +19,16 @@ except Exception as e:
 class GetCustom(Resource):
     def get(self):
         parser = reqparse.RequestParser()
-        parser.add_argument("name_lecture", type=str, required=False, default=None)
-        parser.add_argument("object_name", type=str, required=False, default=None)
-        parser.add_argument("course", type=int, required=False, default=None)
-        parser.add_argument("popular", type=int, required=False, default=None)
+        parser.add_argument("name_lecture", type=str, required=False, default=None, location='args')
+        parser.add_argument("object_name", type=str, required=False, default=None, location='args')
+        parser.add_argument("course", type=int, required=False, default=None, location='args')
+        parser.add_argument("popular", type=int, required=False, default=None, location='args')
         args = parser.parse_args()
 
         try:
             with connection.cursor() as cursor:
                 query = """
-                    SELECT lecture.name, object.object_name, lecture.course, lecture.count_view
+                    SELECT lecture.id_lecture, lecture.name, object.object_name, lecture.course, lecture.count_view
                     FROM lecture 
                     INNER JOIN object ON lecture.object_id = object.id_object
                 """

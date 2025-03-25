@@ -7,6 +7,7 @@ from find_all import FindAll
 from get_specialization import GetSpecialization
 from get_object import GetObject
 from find_custom import GetCustom
+from del_old import del_old
 
 app = Flask(__name__)
 api = Api(app)
@@ -18,6 +19,7 @@ api.add_resource(FindAll, "/api/find_all")
 api.add_resource(GetSpecialization, "/api/get_specialization")
 api.add_resource(GetObject, "/api/get_object")
 api.add_resource(GetCustom, "/api/get_custom")
+api.add_resource(del_old, "/api/del_old")
 
 if __name__ == "__main__":
     app.run(debug=True, port=3000, host="127.0.0.1")

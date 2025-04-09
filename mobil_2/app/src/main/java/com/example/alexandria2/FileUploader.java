@@ -25,7 +25,7 @@ public class FileUploader {
 
     public static void uploadFileToServer(Context context, File pdfFile, String fileName, int objectId, int course, int userId) {
         // URL сервера
-        String url = "http://77.222.47.209:3000/api/lecture_add";
+        String url = "http://77.222.47.209:3001/api/lecture_add";
 
         executorService.execute(() -> {
             // Чтение файла и преобразование в Base64

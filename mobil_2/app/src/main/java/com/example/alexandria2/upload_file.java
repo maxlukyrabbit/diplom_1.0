@@ -165,7 +165,7 @@ public class upload_file extends AppCompatActivity {
         Handler handler = new Handler(Looper.getMainLooper());
 
         executor.execute(() -> {
-            String apiUrl = "http://77.222.47.209:3000/api/get_object";
+            String apiUrl = "http://77.222.47.209:3001/api/get_object";
             ArrayList<String> objectNames = new ArrayList<>();
 
             try {

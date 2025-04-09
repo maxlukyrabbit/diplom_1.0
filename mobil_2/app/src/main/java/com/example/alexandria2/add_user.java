@@ -53,7 +53,7 @@ public class add_user extends AppCompatActivity {
         Handler handler = new Handler(Looper.getMainLooper());
 
         executor.execute(() -> {
-            String apiUrl = "http://77.222.47.209:3000/api/user_add?surname=" + surname.getText().toString() + "&name=" + name.getText().toString();
+            String apiUrl = "http://77.222.47.209:3001/api/user_add?surname=" + surname.getText().toString() + "&name=" + name.getText().toString();
             String resultMessage = "";
             String password_get = null;
 

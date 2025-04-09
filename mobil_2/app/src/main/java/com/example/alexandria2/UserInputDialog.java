@@ -91,7 +91,7 @@ public class UserInputDialog {
                 return;
             }
 
-            String url = "http://77.222.47.209:3000/api/user_add";
+            String url = "http://77.222.47.209:3001/api/user_add";
 
             JSONObject jsonData = new JSONObject();
             try {
@@ -147,7 +147,7 @@ public class UserInputDialog {
         Handler handler = new Handler(Looper.getMainLooper());
 
         executor.execute(() -> {
-            String apiUrl = "http://77.222.47.209:3000/api/get_specialization";
+            String apiUrl = "http://77.222.47.209:3001/api/get_specialization";
             ArrayList<String> specializationNames = new ArrayList<>();
 
             try {

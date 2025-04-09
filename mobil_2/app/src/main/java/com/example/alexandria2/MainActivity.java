@@ -100,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
         Handler handler = new Handler(Looper.getMainLooper());
 
         executor.execute(() -> {
-            String apiUrl = "http://77.222.47.209:3000/api/find_all";
+            String apiUrl = "http://77.222.47.209:3001/api/find_all";
             ArrayList<Lecture> fetchedLectures = new ArrayList<>();
             String resultMessage;
 
@@ -176,7 +176,7 @@ public class MainActivity extends AppCompatActivity {
         Handler handler = new Handler(Looper.getMainLooper());
 
         executor.execute(() -> {
-            StringBuilder apiUrlBuilder = new StringBuilder("http://77.222.47.209:3000/api/get_custom");
+            StringBuilder apiUrlBuilder = new StringBuilder("http://77.222.47.209:3001/api/get_custom");
             ArrayList<String> params = new ArrayList<>();
 
             try {
@@ -261,7 +261,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void del_old(View v) {
-        String URL = "http://77.222.47.209:3000/api/del_old";
+        String URL = "http://77.222.47.209:3001/api/del_old";
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
                 .url(URL)

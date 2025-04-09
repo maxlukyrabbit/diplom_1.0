@@ -19,7 +19,7 @@ import java.net.URL;
 
 public class read_pdf extends AppCompatActivity {
 
-    private static final String BASE_URL = "http://77.222.47.209:3000/api/lecture_add";
+    private static final String BASE_URL = "http://77.222.47.209:3001/api/lecture_add";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

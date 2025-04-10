@@ -1,5 +1,7 @@
 package com.example.alexandria2;
 
+import static androidx.core.content.ContextCompat.startActivity;
+
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -39,7 +41,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class upload_file extends AppCompatActivity {
-    private Uri uri;
+    private Uri uri = null;
     private EditText name, course;
     private Spinner object;
     public Context context;
@@ -117,28 +119,42 @@ public class upload_file extends AppCompatActivity {
 
     public void add(View v) {
         context = getApplicationContext();
-
         File pdfFile = null;
+        if(uri == null){
+            Toast.makeText(context, "Выберите файл", Toast.LENGTH_LONG).show();
+            return;
+        }
         try {
             pdfFile = getFileFromUri(uri);
         } catch (IOException e) {
             Toast.makeText(context, "Ошибка получения файла: " + e.getMessage(), Toast.LENGTH_LONG).show();
             return;
         }
-
         if (pdfFile == null) {
             Toast.makeText(context, "Не удалось получить файл", Toast.LENGTH_LONG).show();
             return;
         }
-
+        if(name.getText().toString().equals("")){
+            Toast.makeText(context, "Укажите название лекции", Toast.LENGTH_LONG).show();
+            return;
+        }
+        if(course.getText().toString().equals("")){
+            Toast.makeText(context, "Укажите курс", Toast.LENGTH_LONG).show();
+            return;
+        }
         FileUploader.uploadFileToServer(
                 context,
                 pdfFile,
                 name.getText().toString(),
                 ObjectMap.get(object.getSelectedItem().toString()),
-                4,
+                Integer.parseInt(course.getText().toString()),
                 1
         );
+        Toast.makeText(context, "Ожидайте", Toast.LENGTH_LONG).show();
+        try {
+            Thread.sleep(4000);
+        } catch (InterruptedException e) {
+        }
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
@@ -214,10 +230,16 @@ public class upload_file extends AppCompatActivity {
             }
 
             handler.post(() -> {
-                ArrayAdapter<String> objectAdapter = new ArrayAdapter<>(context, android.R.layout.simple_spinner_item, objectNames);
+                ArrayAdapter<String> objectAdapter = new ArrayAdapter<>(context, R.layout.spinner_item, objectNames);
                 objectAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 objectSpinner.setAdapter(objectAdapter);
             });
         });
     }
+
+    public void back(View v){
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+    }
+
 }

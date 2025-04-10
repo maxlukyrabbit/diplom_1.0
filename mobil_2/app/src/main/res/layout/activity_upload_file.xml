@@ -5,7 +5,8 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".upload_file">
+    tools:context=".upload_file"
+    android:background="@color/black">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -26,6 +27,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Название лекции"
+                android:textColor="@color/white"
                 android:inputType="text" />
 
             <EditText
@@ -33,6 +35,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Курс"
+                android:textColor="@color/white"
                 android:inputType="number" />
 
             <Spinner
@@ -44,24 +47,48 @@
 
 
             <TextView
-                android:id="@+id/textView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="" />
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/search_file"
                 android:layout_width="match_parent"
+                style="@style/CustomButtonStyle"
+                android:textColor="@color/white"
                 android:layout_height="wrap_content"
                 android:onClick="open_file"
                 android:text="Выбрать файл" />
 
-            <Button
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="" />
+
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/upload"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                style="@style/CustomButtonStyle"
                 android:onClick="add"
+                android:textColor="@color/white"
                 android:text="Загрузить" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/back"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/CustomButtonStyle"
+                android:onClick="back"
+                android:textColor="@color/white"
+                android:text="Назад" />
+
         </LinearLayout>
     </ScrollView>
 

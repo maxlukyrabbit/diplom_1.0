@@ -287,4 +287,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+    public void back(View v){
+        Intent intent = new Intent(this, add_user.class);
+        startActivity(intent);
+    }
 }

@@ -1,6 +1,9 @@
 package com.example.alexandria2;
 
+import static androidx.core.content.ContextCompat.startActivity;
+
 import android.content.Context;
+import android.content.Intent;
 import android.util.Base64;
 import android.widget.Toast;
 
@@ -20,15 +23,12 @@ import okhttp3.Response;
 
 public class FileUploader {
 
-    // Создаем ExecutorService с фиксированным пулом потоков
     private static final ExecutorService executorService = Executors.newFixedThreadPool(2);
 
     public static void uploadFileToServer(Context context, File pdfFile, String fileName, int objectId, int course, int userId) {
-        // URL сервера
         String url = "http://77.222.47.209:3001/api/lecture_add";
 
         executorService.execute(() -> {
-            // Чтение файла и преобразование в Base64
             String pdfBase64;
             try {
                 pdfBase64 = encodeFileToBase64(pdfFile);
@@ -37,7 +37,6 @@ public class FileUploader {
                 return;
             }
 
-            // Формирование JSON данных
             JSONObject jsonData = new JSONObject();
             try {
                 jsonData.put("name", fileName);
@@ -51,25 +50,22 @@ public class FileUploader {
                 return;
             }
 
-            // Подготовка запроса OkHttp
             MediaType JSON = MediaType.parse("application/json; charset=utf-8");
             RequestBody requestBody = RequestBody.create(JSON, jsonData.toString());
             OkHttpClient client = new OkHttpClient();
 
             Request request = new Request.Builder()
                     .url(url)
-                    .put(requestBody) // Используем метод PUT
+                    .put(requestBody)
                     .build();
 
             try {
                 Response response = client.newCall(request).execute();
 
                 if (response.isSuccessful() && response.body() != null) {
-                    String responseBody = response.body().string();
-                    // Обработка ответа сервера в основном потоке
-                    postToMainThread(() -> Toast.makeText(context, "Файл успешно загружен: " + responseBody, Toast.LENGTH_LONG).show());
+                    postToMainThread(() -> Toast.makeText(context, "Файл успешно загружен", Toast.LENGTH_LONG).show());
+
                 } else {
-                    // Обработка ошибки
                     postToMainThread(() -> Toast.makeText(context, "Ошибка загрузки файла: " + response.code(), Toast.LENGTH_LONG).show());
                 }
             } catch (IOException e) {

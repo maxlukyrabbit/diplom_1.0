@@ -23,7 +23,7 @@
             android:name=".read_pdf"
             android:exported="false" />
         <activity
-            android:name=".add_user"
+            android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -35,7 +35,7 @@
             android:name=".custom_list"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".add_user"
             android:exported="true" />
     </application>
 

@@ -6,4 +6,8 @@
     </style>
 
     <style name="Theme.Alexandria2" parent="Base.Theme.Alexandria2" />
+    <style name="CustomButtonStyle" parent="Widget.Material3.Button">
+        <item name="android:background">@drawable/rectangle_shape</item>
+        <item name="backgroundTint">@null</item>
+    </style>
 </resources>

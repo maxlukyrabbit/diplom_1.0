@@ -59,7 +59,6 @@ class AddUser(Resource):
         args = parser.parse_args()
 
         try:
-            # Выполнение SQL-запроса
             with connection.cursor() as cursor:
                 cursor.execute(
                     """

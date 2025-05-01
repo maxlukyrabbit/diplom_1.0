@@ -31,7 +31,7 @@ class AddUser(Resource):
             with connection.cursor() as cursor:
                 cursor.execute(
                     """
-                    SELECT password
+                    SELECT password, type_user_id, id_user
                     FROM "user" 
                     WHERE surname = %s AND name = %s
                     """,

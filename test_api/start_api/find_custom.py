@@ -28,7 +28,7 @@ class GetCustom(Resource):
         try:
             with connection.cursor() as cursor:
                 query = """
-                    SELECT lecture.id_lecture, lecture.name, object.object_name, lecture.course, lecture.count_view
+                    SELECT lecture.id_lecture, lecture.name, object.object_name, lecture.course, lecture.count_view, lecture.status
                     FROM lecture 
                     INNER JOIN object ON lecture.object_id = object.id_object
                 """

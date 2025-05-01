@@ -45,6 +45,7 @@ public class FileUploader {
                 jsonData.put("course", course);
                 jsonData.put("user_id", userId);
                 jsonData.put("count_view", 0);
+                jsonData.put("status", add_user.root == 1 ? 0 : 1);
             } catch (Exception e) {
                 postToMainThread(() -> Toast.makeText(context, "Ошибка при создании JSON: " + e.getMessage(), Toast.LENGTH_SHORT).show());
                 return;

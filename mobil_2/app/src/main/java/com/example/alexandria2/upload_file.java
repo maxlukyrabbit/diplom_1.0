@@ -148,7 +148,7 @@ public class upload_file extends AppCompatActivity {
                 name.getText().toString(),
                 ObjectMap.get(object.getSelectedItem().toString()),
                 Integer.parseInt(course.getText().toString()),
-                1
+                add_user.id_user
         );
         Toast.makeText(context, "Ожидайте", Toast.LENGTH_LONG).show();
         try {
@@ -239,6 +239,7 @@ public class upload_file extends AppCompatActivity {
 
     public void back(View v){
         Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
         startActivity(intent);
     }
 

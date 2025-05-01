@@ -32,6 +32,8 @@ import java.util.concurrent.Executors;
 public class add_user extends AppCompatActivity {
     EditText surname, name, password;
     public static int root = 0;
+    public static int id_user = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,7 +50,6 @@ public class add_user extends AppCompatActivity {
     }
 
     public void enter(View v) {
-        root = surname.getText().toString().equals("Случаев") ? 1 : 0;
         ExecutorService executor = Executors.newSingleThreadExecutor();
         Handler handler = new Handler(Looper.getMainLooper());
 
@@ -82,6 +83,9 @@ public class add_user extends AppCompatActivity {
                     if (jsonResponse.length() > 0) {
                         JSONObject firstObject = jsonResponse.getJSONObject(0);
                         password_get = firstObject.optString("password", null);
+                        root = Integer.parseInt(firstObject.optString("type_user_id", null));
+                        id_user = Integer.parseInt(firstObject.optString("id_user", null));
+
                     } else {
                         resultMessage = "Пользователь не найден";
                     }

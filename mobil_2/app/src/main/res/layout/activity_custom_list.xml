@@ -9,6 +9,13 @@
     android:orientation="vertical">
 
 
+    <ImageView
+        android:id="@+id/image_new"
+        android:visibility="gone"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/baseline_fiber_new_24" />
+
     <TextView
         android:id="@+id/lecture_title"
         android:layout_width="wrap_content"
@@ -37,8 +44,36 @@
         style="@style/CustomButtonStyle"
         android:id="@+id/read"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="35dp"
         android:text="Читать"
+        android:textSize="13dp"
+        android:textColor="@color/white"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="2dp"/>
+
+    <com.google.android.material.button.MaterialButton
+        style="@style/CustomButtonStyle"
+        android:id="@+id/agree"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:textSize="13dp"
+        android:text="Подтвердить"
+        android:textColor="@color/white"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="2dp"/>
+
+    <com.google.android.material.button.MaterialButton
+        style="@style/CustomButtonStyle"
+        android:id="@+id/delete"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:textSize="13dp"
+        android:text="Удалить"
         android:textColor="@color/white"/>
 
 

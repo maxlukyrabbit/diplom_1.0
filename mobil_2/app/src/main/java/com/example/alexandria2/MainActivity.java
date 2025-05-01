@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         image_button = findViewById(R.id.del_old);
-        if (add_user.root == 1) {
+        if (add_user.root == 3) {
             image_button.setVisibility(View.VISIBLE);
         }
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
@@ -129,7 +129,8 @@ public class MainActivity extends AppCompatActivity {
                                 lectureJson.getInt("id_lecture"),
                                 lectureJson.getString("name"),
                                 lectureJson.getString("object_name"),
-                                lectureJson.getInt("course")
+                                lectureJson.getInt("course"),
+                                lectureJson.getInt("status")
                         ));
                     }
                     resultMessage = "Лекции успешно загружены!";
@@ -228,7 +229,9 @@ public class MainActivity extends AppCompatActivity {
                                     lectureJson.getInt("id_lecture"),
                                     lectureJson.getString("name"),
                                     lectureJson.getString("object_name"),
-                                    lectureJson.getInt("course")
+                                    lectureJson.getInt("course"),
+                                    lectureJson.getInt("status")
+
                             ));
                         }
                         resultMessage = "Лекции успешно загружены!";

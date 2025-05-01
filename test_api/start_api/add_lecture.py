@@ -69,6 +69,7 @@ class AddLecture(Resource):
         parser.add_argument("course", type=int, required=True, help="Course is required")
         parser.add_argument("user_id", type=int, required=True, help="User ID is required")
         parser.add_argument("count_view", type=int, required=True, help="Count view is required")
+        parser.add_argument("status", type=int, required=True, help="status is required")
         args = parser.parse_args()
 
         try:
@@ -78,14 +79,14 @@ class AddLecture(Resource):
                 cursor.execute(
                     """
                     INSERT INTO lecture (
-                        name, object_id, file_pdf, course, user_id, count_view
+                        name, object_id, file_pdf, course, user_id, count_view, status
                     )
-                    VALUES (%s, %s, %s, %s, %s, %s)
+                    VALUES (%s, %s, %s, %s, %s, %s, %s)
                     """,
                     (
                         args["name"], args["object_id"], file_pdf_bytes,
                         args["course"], args["user_id"],
-                        args["count_view"]
+                        args["count_view"], args["status"]
                     )
                 )
             return {"message": "Lecture added successfully"}, 201

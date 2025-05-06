@@ -42,7 +42,6 @@ public class UserInputDialog {
         View dialogView = inflater.inflate(R.layout.dialog_user_input, null);
         builder.setView(dialogView);
 
-        // Инициализация полей ввода
         EditText surnameInput = dialogView.findViewById(R.id.surnameInput);
         EditText nameInput = dialogView.findViewById(R.id.nameInput);
         EditText patronymicInput = dialogView.findViewById(R.id.patronymicInput);
@@ -52,23 +51,19 @@ public class UserInputDialog {
         Spinner typeUserSpinner = dialogView.findViewById(R.id.typeUserSpinner);
         Spinner specializationSpinner = dialogView.findViewById(R.id.specializationSpinner);
 
-        // Настройка данных для спиннера типа пользователя
         String[] typeUserOptions = {"Студент", "Преподаватель"};
         ArrayAdapter<String> typeUserAdapter = new ArrayAdapter<>(context, android.R.layout.simple_spinner_item, typeUserOptions);
         typeUserAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         typeUserSpinner.setAdapter(typeUserAdapter);
 
-        // Настройка кнопок
         builder.setPositiveButton("Зарегистрироваться", null);
         builder.setNegativeButton("Отмена", (dialog, which) -> dialog.dismiss());
 
         AlertDialog dialog = builder.create();
         dialog.show();
 
-        // Загрузка специальностей и обновление спиннера
         putSpecializations(context, specializationSpinner);
 
-        // Обработка нажатия на кнопку "Зарегистрироваться"
         Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
         positiveButton.setOnClickListener(v -> {
             String surname = surnameInput.getText().toString().trim();
@@ -82,12 +77,18 @@ public class UserInputDialog {
             try {
                 course = Integer.parseInt(courseInput.getText().toString().trim());
             } catch (NumberFormatException e) {
-                Toast.makeText(context, "Введите корректный курс", Toast.LENGTH_SHORT).show();
-                return;
+                if(typeUserSpinner.getSelectedItem().toString() == "Преподаватель"){
+                    course = 0;
+                }
+                else {
+                    Toast.makeText(context, "Введите корректный курс", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
             }
 
-            if (surname.isEmpty() || name.isEmpty() || password.isEmpty()) {
-                Toast.makeText(context, "Введите фамилию, имя и пароль", Toast.LENGTH_SHORT).show();
+            if (surname.isEmpty() || name.isEmpty() || password.isEmpty() || patronymic.isEmpty()) {
+                Toast.makeText(context, "Введите фамилию, имя, почту и пароль", Toast.LENGTH_SHORT).show();
                 return;
             }
 
@@ -97,7 +98,7 @@ public class UserInputDialog {
             try {
                 jsonData.put("surname", surname);
                 jsonData.put("name", name);
-                jsonData.put("patronymic", patronymic);
+                jsonData.put("mail", patronymic);
                 jsonData.put("type_user_id", typeUser.equals("Преподаватель") ? 2 : 1);
                 jsonData.put("specialization_id", specializationMap.get(specialization));
                 jsonData.put("course", course);

@@ -31,7 +31,7 @@ class AddUser(Resource):
             with connection.cursor() as cursor:
                 cursor.execute(
                     """
-                    SELECT password, type_user_id, id_user
+                    SELECT password, type_user_id, id_user, mail
                     FROM "user" 
                     WHERE surname = %s AND name = %s
                     """,
@@ -51,7 +51,7 @@ class AddUser(Resource):
         parser = reqparse.RequestParser()
         parser.add_argument("surname", type=str, required=True, help="Surname is required")
         parser.add_argument("name", type=str, required=True, help="Name is required")
-        parser.add_argument("patronymic", type=str, required=True, help="Patronymic is required")
+        parser.add_argument("mail", type=str, required=True, help="Mail is required")
         parser.add_argument("type_user_id", type=int, required=True, help="Type User ID is required")
         parser.add_argument("specialization_id", type=int, required=True, help="Specialization ID is required")
         parser.add_argument("course", type=int, required=True, help="Course is required")
@@ -63,12 +63,12 @@ class AddUser(Resource):
                 cursor.execute(
                     """
                     INSERT INTO "user" (
-                        surname, name, patronymic, type_user_id, specialization_id, course, password
+                        surname, name, mail, type_user_id, specialization_id, course, password
                     )
                     VALUES (%s, %s, %s, %s, %s, %s, %s)
                     """,
                     (
-                        args["surname"], args["name"], args["patronymic"],
+                        args["surname"], args["name"], args["mail"],
                         args["type_user_id"], args["specialization_id"],
                         args["course"], args["password"]
                     )

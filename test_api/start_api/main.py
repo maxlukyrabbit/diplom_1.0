@@ -9,6 +9,7 @@ from get_object import GetObject
 from find_custom import GetCustom
 from del_old import del_old
 from change_status import changeStatus
+from find_teacher import findTeacher
 
 app = Flask(__name__)
 api = Api(app)
@@ -22,6 +23,7 @@ api.add_resource(GetObject, "/api/get_object")
 api.add_resource(GetCustom, "/api/get_custom")
 api.add_resource(del_old, "/api/del_old")
 api.add_resource(changeStatus, "/api/change_status")
+api.add_resource(findTeacher, "/api/find_teacher")
 
 if __name__ == "__main__":
     app.run(debug=True, port=3000, host="127.0.0.1")

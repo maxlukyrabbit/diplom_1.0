@@ -36,14 +36,14 @@
                 android:id="@+id/patronymicInput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Отчество"
+                android:hint="Почта"
                 android:inputType="textPersonName" />
 
             <EditText
                 android:id="@+id/courseInput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Курс"
+                android:hint="Курс(Не заполняется преподавателем)"
                 android:inputType="number" />
 
             <Spinner

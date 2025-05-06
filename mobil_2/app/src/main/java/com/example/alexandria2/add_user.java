@@ -33,6 +33,7 @@ public class add_user extends AppCompatActivity {
     EditText surname, name, password;
     public static int root = 0;
     public static int id_user = 0;
+    public static String mail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,6 +86,7 @@ public class add_user extends AppCompatActivity {
                         password_get = firstObject.optString("password", null);
                         root = Integer.parseInt(firstObject.optString("type_user_id", null));
                         id_user = Integer.parseInt(firstObject.optString("id_user", null));
+                        mail = firstObject.optString("mail", null);
 
                     } else {
                         resultMessage = "Пользователь не найден";

@@ -25,21 +25,42 @@ android {
             )
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
+
+    packaging {
+        resources {
+            excludes += listOf(
+                "/META-INF/NOTICE.md",
+                "/META-INF/LICENSE.md",
+                "/META-INF/DEPENDENCIES",
+                "/META-INF/LICENSE",
+                "/META-INF/NOTICE"
+            )
+        }
+    }
 }
 
 dependencies {
-
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.activity)
     implementation(libs.constraintlayout)
-    // https://mvnrepository.com/artifact/com.github.barteksc/android-pdf-viewer
-    implementation ("com.github.mhiew:android-pdf-viewer:3.2.0-beta.3")
+
+    // PDF Viewer
+    implementation("com.github.mhiew:android-pdf-viewer:3.2.0-beta.3")
+
+    // HTTP client
     implementation("com.squareup.okhttp3:okhttp:4.12.0")
+
+    // JavaMail
+    implementation("com.sun.mail:android-mail:1.6.7")
+    implementation("com.sun.mail:android-activation:1.6.7")
+
+    // Testing
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)

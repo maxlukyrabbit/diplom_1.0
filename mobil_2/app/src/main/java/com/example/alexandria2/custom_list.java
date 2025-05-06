@@ -51,7 +51,7 @@ public class custom_list extends BaseAdapter {
     }
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        if (this.items.get(position).status == 0 && add_user.root != 3) {
+        if ((this.items.get(position).status == 0 && add_user.root != 3) || this.items.get(position).status == 2) {
             View emptyView = new View(context);
             emptyView.setLayoutParams(new AbsListView.LayoutParams(0, 0));
             return emptyView;

@@ -283,12 +283,14 @@ public class MainActivity extends AppCompatActivity {
                     String responseBody = response.body().string();
                     Log.i("HTTP_SUCCESS", "Ответ сервера: " + responseBody);
                     runOnUiThread(() -> Toast.makeText(getApplicationContext(), "Архивация прошла успешно", Toast.LENGTH_SHORT).show());
+                    loadLecturesFromApi();
                 } else {
                     Log.e("HTTP_ERROR", "Ошибка: " + response.code());
                     runOnUiThread(() -> Toast.makeText(getApplicationContext(), "Ошибка сервера: " + response.code(), Toast.LENGTH_SHORT).show());
                 }
             }
         });
+
     }
 
     public void back(View v){

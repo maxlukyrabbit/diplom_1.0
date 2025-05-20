@@ -62,7 +62,7 @@ public class dialogSendMail {
                         try {
                             GMailSender sender = new GMailSender("slucaev059@gmail.com", "hpoy sfjb wkie ojax");
                             sender.sendMail(
-                                    "Вопрос по лекции" + read_pdf.fileName_g,
+                                    "Вопрос по лекции: " + read_pdf.fileName_g,
                                     inputText + "\nПожалуйcта, ответьте на почту: " + add_user.mail,
                                     "slucaev059@gmail.com",
                                     selectedEmail

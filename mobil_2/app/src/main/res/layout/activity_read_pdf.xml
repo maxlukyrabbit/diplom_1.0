@@ -22,14 +22,14 @@
 
     <com.github.barteksc.pdfviewer.PDFView
         android:id="@+id/pdfView"
-        android:layout_width="411dp"
-        android:layout_height="521dp"
+        android:layout_width="396dp"
+        android:layout_height="514dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.466"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/name"
-        app:layout_constraintVertical_bias="0.046" />
+        app:layout_constraintVertical_bias="0.044" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/send_message"

@@ -245,7 +245,10 @@ public class read_pdf extends AppCompatActivity {
                     TEACHERS.clear();
                     TEACHERS.addAll(fetchedTeachers);
                 }
-                Toast.makeText(this, finalResultMessage, Toast.LENGTH_SHORT).show();
+                if(!finalResultMessage.equals("Преподаватели успешно загружены!")){
+                    Toast.makeText(this, finalResultMessage, Toast.LENGTH_SHORT).show();
+                }
+
             });
         });
     }

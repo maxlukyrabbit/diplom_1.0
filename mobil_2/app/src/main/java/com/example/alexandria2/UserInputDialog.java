@@ -124,7 +124,7 @@ public class UserInputDialog {
                     if (response.isSuccessful() && response.body() != null) {
                         String responseBody = response.body().string();
                         new Handler(Looper.getMainLooper()).post(() -> {
-                            Toast.makeText(context, "Успех: " + responseBody, Toast.LENGTH_LONG).show();
+                            Toast.makeText(context, "Успех", Toast.LENGTH_LONG).show();
                         });
                     } else {
                         new Handler(Looper.getMainLooper()).post(() -> {

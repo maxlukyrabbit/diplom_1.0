@@ -21,19 +21,39 @@ class changeStatus(Resource):
         try:
             status = request.args.get("status")
             id_lecture = request.args.get("id_lecture")
+
+            if not all([status, id_lecture]):
+                return {"message": "Missing required parameters"}, 400
+
+            try:
+                status = int(status)
+                id_lecture = int(id_lecture)
+            except ValueError:
+                return {"message": "Invalid parameter type"}, 400
+
             with connection.cursor() as cursor:
-                cursor.execute(
-                    """
-                    UPDATE "lecture"
-                    SET status = %s
-                    WHERE id_lecture = %s;
-                    """,
-                    (status, id_lecture)
-                )
+                if status != 2:
+                    cursor.execute(
+                        '''
+                        UPDATE "lecture"
+                        SET status = %s
+                        WHERE id_lecture = %s
+                        ''',
+                        (status, id_lecture)
+                    )
+                else:
+                    cursor.execute(
+                        '''
+                        DELETE FROM "lecture"
+                        WHERE id_lecture = %s
+                        ''',
+                        (id_lecture,)
+                    )
+
                 connection.commit()
-            return 200
+
+            return {"message": "Operation successful"}, 200
+
         except Exception as e:
-            return {"message": f"Error retrieving data: {e}"}, 500
-
-
-    
+            connection.rollback()
+            return {"message": f"Error processing request: {str(e)}"}, 500

@@ -51,78 +51,83 @@ public class add_user extends AppCompatActivity {
     }
 
     public void enter(View v) {
-        ExecutorService executor = Executors.newSingleThreadExecutor();
-        Handler handler = new Handler(Looper.getMainLooper());
+        if(surname.getText().toString().isEmpty() || name.getText().toString().isEmpty()){
+            Toast.makeText(this, "Введите фамилию и имя", Toast.LENGTH_LONG).show();
 
-        executor.execute(() -> {
-            String apiUrl = "http://77.222.47.209:3001/api/user_add?surname=" + surname.getText().toString() + "&name=" + name.getText().toString();
-            String resultMessage = "";
-            String password_get = null;
+        }
+        else {
+            ExecutorService executor = Executors.newSingleThreadExecutor();
+            Handler handler = new Handler(Looper.getMainLooper());
 
-            HttpURLConnection connection = null;
-            BufferedReader reader = null;
+            executor.execute(() -> {
+                String apiUrl = "http://77.222.47.209:3001/api/user_add?surname=" + surname.getText().toString() + "&name=" + name.getText().toString();
+                String resultMessage = "";
+                String password_get = null;
 
-            try {
-                URL url = new URL(apiUrl);
-                connection = (HttpURLConnection) url.openConnection();
-                connection.setRequestMethod("GET");
-                connection.setConnectTimeout(5000);
-                connection.setReadTimeout(5000);
-                connection.setRequestProperty("Accept", "application/json");
+                HttpURLConnection connection = null;
+                BufferedReader reader = null;
 
-                int responseCode = connection.getResponseCode();
-                if (responseCode == HttpURLConnection.HTTP_OK) {
-                    reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-                    StringBuilder response = new StringBuilder();
-                    String line;
-
-                    while ((line = reader.readLine()) != null) {
-                        response.append(line);
-                    }
-
-                    JSONArray jsonResponse = new JSONArray(response.toString());
-                    if (jsonResponse.length() > 0) {
-                        JSONObject firstObject = jsonResponse.getJSONObject(0);
-                        password_get = firstObject.optString("password", null);
-                        root = Integer.parseInt(firstObject.optString("type_user_id", null));
-                        id_user = Integer.parseInt(firstObject.optString("id_user", null));
-                        mail = firstObject.optString("mail", null);
-
-                    } else {
-                        resultMessage = "Пользователь не найден";
-                    }
-                } else {
-                    resultMessage = "Ошибка сервера: " + responseCode;
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-                resultMessage = "Ошибка при выполнении запроса: " + e.getMessage();
-            } finally {
                 try {
-                    if (reader != null) reader.close();
-                    if (connection != null) connection.disconnect();
-                } catch (IOException e) {
+                    URL url = new URL(apiUrl);
+                    connection = (HttpURLConnection) url.openConnection();
+                    connection.setRequestMethod("GET");
+                    connection.setConnectTimeout(5000);
+                    connection.setReadTimeout(5000);
+                    connection.setRequestProperty("Accept", "application/json");
+
+                    int responseCode = connection.getResponseCode();
+                    if (responseCode == HttpURLConnection.HTTP_OK) {
+                        reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                        StringBuilder response = new StringBuilder();
+                        String line;
+
+                        while ((line = reader.readLine()) != null) {
+                            response.append(line);
+                        }
+
+                        JSONArray jsonResponse = new JSONArray(response.toString());
+                        if (jsonResponse.length() > 0) {
+                            JSONObject firstObject = jsonResponse.getJSONObject(0);
+                            password_get = firstObject.optString("password", null);
+                            root = Integer.parseInt(firstObject.optString("type_user_id", null));
+                            id_user = Integer.parseInt(firstObject.optString("id_user", null));
+                            mail = firstObject.optString("mail", null);
+
+                        } else {
+                            resultMessage = "Пользователь не найден";
+                        }
+                    } else {
+                        resultMessage = "Ошибка сервера: " + responseCode;
+                    }
+                } catch (Exception e) {
                     e.printStackTrace();
-                }
-            }
-
-            String finalResultMessage = resultMessage;
-            String finalPassword = password_get;
-
-            handler.post(() -> {
-                if (finalPassword != null) {
-                    if(password.getText().toString().equals(finalPassword)){
-                        Intent intent = new Intent(this, MainActivity.class);
-                        startActivity(intent);
+                    resultMessage = "Ошибка при выполнении запроса: " + e.getMessage();
+                } finally {
+                    try {
+                        if (reader != null) reader.close();
+                        if (connection != null) connection.disconnect();
+                    } catch (IOException e) {
+                        e.printStackTrace();
                     }
-                    else{
-                        Toast.makeText(this, "Неверный пароль", Toast.LENGTH_SHORT).show();
-                    }
-                } else {
-                    Toast.makeText(getApplicationContext(), finalResultMessage.isEmpty() ? "Пользователь не найден" : finalResultMessage, Toast.LENGTH_LONG).show();
                 }
+
+                String finalResultMessage = resultMessage;
+                String finalPassword = password_get;
+
+                handler.post(() -> {
+                    if (finalPassword != null) {
+                        if (password.getText().toString().equals(finalPassword)) {
+                            Intent intent = new Intent(this, MainActivity.class);
+                            startActivity(intent);
+                        } else {
+                            Toast.makeText(this, "Неверный пароль", Toast.LENGTH_SHORT).show();
+                        }
+                    } else {
+                        Toast.makeText(getApplicationContext(), finalResultMessage.isEmpty() ? "Пользователь не найден" : finalResultMessage, Toast.LENGTH_LONG).show();
+                    }
+                });
             });
-        });
+        }
     }
 
     public void user_add(View v){

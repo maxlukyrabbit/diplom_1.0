@@ -112,7 +112,8 @@ public class UserInputDialog {
             MediaType JSON = MediaType.parse("application/json; charset=utf-8");
             RequestBody body = RequestBody.create(JSON, jsonData.toString());
             OkHttpClient client = new OkHttpClient();
-            Request request = new Request.Builder()
+            Request request;
+            request = new Request.Builder()
                     .url(url)
                     .put(body)
                     .build();

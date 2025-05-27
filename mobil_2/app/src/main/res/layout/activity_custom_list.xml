@@ -20,6 +20,7 @@
         android:id="@+id/lecture_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="@color/black"
         android:text="Название лекции: "
         android:textSize="18sp"
         android:padding="8dp" />
@@ -28,6 +29,7 @@
         android:id="@+id/subject"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="@color/black"
         android:text="Предмет: "
         android:textSize="18sp"
         android:padding="8dp" />
@@ -36,6 +38,7 @@
         android:id="@+id/course"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="@color/black"
         android:text="Курс: "
         android:textSize="18sp"
         android:padding="8dp" />

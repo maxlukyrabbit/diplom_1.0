@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".upload_file"
-    android:background="@color/black">
+    android:background="@color/Primary">
 
     <ScrollView
         android:layout_width="match_parent"

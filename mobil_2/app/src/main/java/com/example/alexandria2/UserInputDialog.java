@@ -12,6 +12,8 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import androidx.core.content.ContextCompat;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -41,6 +43,7 @@ public class UserInputDialog {
 
         View dialogView = inflater.inflate(R.layout.dialog_user_input, null);
         builder.setView(dialogView);
+
 
         EditText surnameInput = dialogView.findViewById(R.id.surnameInput);
         EditText nameInput = dialogView.findViewById(R.id.nameInput);

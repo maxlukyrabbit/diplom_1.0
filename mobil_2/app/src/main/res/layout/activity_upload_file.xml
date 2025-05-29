@@ -27,7 +27,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Название лекции"
-                android:textColor="@color/white"
+                android:textColorHint="@color/Maroon"
+                android:textColor="@color/black"
                 android:inputType="text" />
 
             <EditText
@@ -35,7 +36,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Курс"
-                android:textColor="@color/white"
+                android:textColorHint="@color/Maroon"
+                android:textColor="@color/black"
                 android:inputType="number" />
 
             <Spinner
@@ -55,7 +57,7 @@
                 android:id="@+id/search_file"
                 android:layout_width="match_parent"
                 style="@style/CustomButtonStyle"
-                android:textColor="@color/white"
+                android:textColor="@color/black"
                 android:layout_height="wrap_content"
                 android:onClick="open_file"
                 android:text="Выбрать файл" />
@@ -72,7 +74,7 @@
                 android:layout_height="wrap_content"
                 style="@style/CustomButtonStyle"
                 android:onClick="add"
-                android:textColor="@color/white"
+                android:textColor="@color/black"
                 android:text="Загрузить" />
 
             <TextView
@@ -86,7 +88,7 @@
                 android:layout_height="wrap_content"
                 style="@style/CustomButtonStyle"
                 android:onClick="back"
-                android:textColor="@color/white"
+                android:textColor="@color/black"
                 android:text="Назад" />
 
         </LinearLayout>

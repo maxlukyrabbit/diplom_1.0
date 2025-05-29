@@ -50,7 +50,7 @@
         android:layout_height="35dp"
         android:text="Читать"
         android:textSize="13dp"
-        android:textColor="@color/white"/>
+        android:textColor="@color/black"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="2dp"/>
@@ -63,7 +63,7 @@
         android:layout_height="35dp"
         android:textSize="13dp"
         android:text="Подтвердить"
-        android:textColor="@color/white"/>
+        android:textColor="@color/black"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -77,7 +77,7 @@
         android:layout_height="35dp"
         android:textSize="13dp"
         android:text="Удалить"
-        android:textColor="@color/white"/>
+        android:textColor="@color/black"/>
 
 
 

@@ -8,7 +8,7 @@ class TestUserAddAPI(unittest.TestCase):
         self.valid_data = {
             "surname": "Николаев",
             "name": "Николай",
-            "patronymic": "Николаевич",
+            "mail": "example@gmail.com",
             "type_user_id": 3,
             "specialization_id": 1,
             "course": 4,
